@@ -1,0 +1,12 @@
+[
+  {
+    "email": "testing@qq.com",
+    "password": "123456789",
+    "role": "Admin"
+  },
+  {
+    "email": "testing1@qq.com",
+    "password": "0123456789",
+    "role": "Basic"
+  }
+]

@@ -1,0 +1,499 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "PDI authentication APIs",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "description": "debughost",
+      "url": "http://localhost:8082"
+    },
+    {
+      "description": "productHost",
+      "url": "http://49.232.28.116/api/"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "Product": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "majorVersion": {
+            "type": "integer"
+          },
+          "minorVersion": {
+            "type": "integer"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "parameters": {
+      "userId": {
+        "name": "userId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "productId": {
+        "name": "productId",
+        "in": "path",
+        "required": true,
+        "description": "the id of query product",
+        "schema": {
+          "type": "integer"
+        }
+      }
+    },
+    "securitySchemes": {
+      "UserToken": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "paths": {
+    "/product": {
+      "post": {
+        "description": "create a new product",
+        "parameters": [],
+        "requestBody": {
+          "description": "product information",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              },
+              "example": {
+                "title": "ORD.SLD_new",
+                "description": "description of the new product",
+                "majorVersion": 1,
+                "minorVersion": 0
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "UserToken": []
+          }
+        ],
+        "tags": [
+          "Product"
+        ]
+      }
+    },
+    "/verify/{userId}/{productId}": {
+      "delete": {
+        "description": "remove product (by product Id) from user (userId)",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userId"
+          },
+          {
+            "$ref": "#/components/parameters/productId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "delete successfully"
+          }
+        },
+        "security": [
+          {
+            "UserToken": []
+          }
+        ],
+        "tags": [
+          "Verify"
+        ]
+      },
+      "post": {
+        "description": "add product (by product Id) to user (userId)",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userId"
+          },
+          {
+            "$ref": "#/components/parameters/productId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "UserToken": []
+          }
+        ],
+        "tags": [
+          "Verify"
+        ]
+      },
+      "get": {
+        "description": "verify if user (userId) has the product (productId)",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userId"
+          },
+          {
+            "$ref": "#/components/parameters/productId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "It has",
+            "content": {
+              "result": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "UserToken": []
+          }
+        ],
+        "tags": [
+          "Verify"
+        ]
+      }
+    },
+    "/verify/{userId}": {
+      "get": {
+        "description": "Get all products of user of userId",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "product": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  },
+                  "nullable": true
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "UserToken": []
+          }
+        ],
+        "tags": [
+          "Verify"
+        ]
+      }
+    },
+    "/product/{productId}": {
+      "put": {
+        "description": "Update current product id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/productId"
+          }
+        ],
+        "requestBody": {
+          "description": "product information",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              },
+              "example": {
+                "title": "ORD.SLD",
+                "description": "description of the new product",
+                "majorVersion": 2,
+                "minorVersion": 0
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "UserToken": []
+          }
+        ],
+        "tags": [
+          "Product"
+        ]
+      },
+      "get": {
+        "description": "get information of product id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/productId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "product": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "UserToken": []
+          }
+        ],
+        "tags": [
+          "Product"
+        ]
+      }
+    },
+    "/products": {
+      "get": {
+        "description": "Get all products",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "product": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "UserToken": []
+          }
+        ],
+        "tags": [
+          "Product"
+        ]
+      }
+    },
+    "/user/{userId}": {
+      "get": {
+        "description": "Get a specified user",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/userId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "User": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "UserToken": []
+          }
+        ],
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/users": {
+      "get": {
+        "description": "Get all users",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Get all users",
+            "content": {
+              "User": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User is not allow"
+          },
+          "403": {
+            "description": "User's bear token is not set or allowed"
+          }
+        },
+        "security": [
+          {
+            "UserToken": []
+          }
+        ],
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/user/role": {
+      "post": {
+        "description": "set user a role",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "the user id whose role will be set",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "description": "the role to be set",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Admin",
+                "Basic"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Set Successfully"
+          },
+          "401": {
+            "description": "User is not allow"
+          },
+          "403": {
+            "description": "User's bear token is not set or allowed"
+          }
+        },
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "UserToken": []
+          }
+        ]
+      }
+    },
+    "/register": {
+      "post": {
+        "description": "create a new users",
+        "parameters": [],
+        "requestBody": {
+          "description": "json to pass to server",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "example": {
+                "email": "12345@qq.com",
+                "password": "Ds12434556@3"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "create successfully"
+          }
+        },
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/login": {
+      "post": {
+        "description": "log in",
+        "parameters": [],
+        "requestBody": {
+          "description": "user to add to the system",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "example": {
+                "email": "testing@qq.com",
+                "password": "123456789"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "login successfully"
+          },
+          "401": {
+            "description": "Do have permission to login"
+          }
+        },
+        "tags": [
+          "Authentication"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "title": "ORD.SLD",
+    "description": "ShipLock Designer for ORD China",
+    "majorVersion": 2,
+    "minorVersion": 9
+  },
+  {
+    "title": "ORD.WaterWay",
+    "description": "WaterWay Designer for ORD China",
+    "majorVersion": 1,
+    "minorVersion": 0
+  },
+  {
+    "title": "MS.PC",
+    "description": "Pile Calculator for ORD China",
+    "majorVersion": 1,
+    "minorVersion": 1
+  }
+]
