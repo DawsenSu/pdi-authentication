@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
 const swaggerUi = require('swagger-ui-express')
+const swaggerStats = require('swagger-stats')
 const swaggerDocument = require('../swagger.json')
 const config = require('./config/config')()
 // eslint-disable-next-line no-unused-vars
@@ -15,6 +16,7 @@ const initializeRoutes = require('./routes')
 const app = express()
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+app.use(swaggerStats.getMiddleware({ swaggerSpec: swaggerDocument }))
 app.use(morgan('combined'))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
