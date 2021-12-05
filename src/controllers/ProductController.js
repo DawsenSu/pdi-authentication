@@ -1,6 +1,6 @@
 const { Product } = require('../models')
 
-async function show(req, res) {
+async function show (req, res) {
   try {
     const products = await Product.findAll({
       limit: 10
@@ -13,7 +13,7 @@ async function show(req, res) {
   }
 }
 
-async function index(req, res) {
+async function index (req, res) {
   const { productId } = req.params
   try {
     const product = await Product.findOne({
@@ -29,7 +29,7 @@ async function index(req, res) {
   }
 }
 
-async function post(req, res) {
+async function post (req, res) {
   try {
     const product = await Product.create(req.body)
     res.status(200).send(product)
@@ -40,16 +40,16 @@ async function post(req, res) {
   }
 }
 
-async function put(req, res) {
+async function put (req, res) {
   const { productId } = req.params
   try {
-    await Product.update(req.body,{
+    await Product.update(req.body, {
       where: {
         id: productId
       }
     })
     const product = await Product.findOne({
-        where:{
+      where: {
         id: productId
       }
     })

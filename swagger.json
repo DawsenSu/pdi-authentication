@@ -11,7 +11,7 @@
     },
     {
       "description": "productHost",
-      "url": "http://49.232.28.116/api/v1"
+      "url": "http://www.dawsensu.top/api/v1"
     }
   ],
   "components": {
@@ -40,6 +40,20 @@
             "type": "string"
           },
           "password": {
+            "type": "string"
+          }
+        }
+      },
+      "CSSKeys": {
+        "type": "object",
+        "properties": {
+          "N2YO": {
+            "type": "string"
+          },
+          "LOCATION": {
+            "type": "string"
+          },
+          "BINGMAP": {
             "type": "string"
           }
         }
@@ -73,6 +87,30 @@
     }
   },
   "paths": {
+    "/getKeys/css": {
+      "get": {
+        "description": "Get CSS Keys",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "Keys": {
+                "schema": {
+                  "type": "object",
+                  "items": {
+                    "$ref": "#/components/schemas/CSSKeys"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
     "/product": {
       "post": {
         "description": "create a new product",

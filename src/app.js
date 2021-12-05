@@ -29,8 +29,10 @@ initializeRoutes(app)
 require('./passport')
 
 if (!process.env.ENV) {
+  const sshConfig = config.ssh;
+  sshConfig.privateKey = require('fs').readFileSync(`${process.env.SSH_PRIVATEKEY}`)
   // eslint-disable-next-line no-unused-vars
-  tunnel(config.ssh, (error, server) => {
+  tunnel(sshConfig, (error, server) => {
     if (error) {
       console.error(error)
     } else {

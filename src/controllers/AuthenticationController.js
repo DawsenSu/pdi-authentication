@@ -2,14 +2,14 @@ const { User } = require('../models')
 const jwt = require('jsonwebtoken')
 const config = require('../config/config')()
 
-function jwtSignUser(user) {
+function jwtSignUser (user) {
   const ONE_WEEK = '7d'
   return jwt.sign(user, config.authentication.jwtSecret, {
     expiresIn: ONE_WEEK
   })
 }
 
-async function register(req, res) {
+async function register (req, res) {
   try {
     const user = await User.create(req.body)
 
@@ -26,22 +26,22 @@ async function register(req, res) {
   }
 }
 
-async function login(req, res) {
+async function login (req, res) {
   try {
     const { email, password } = req.body
     const user = await User.findOne({
       where: {
         email: email
-      }      
+      }
     })
-    if(!user){
+    if (!user) {
       return res.status(403).send({
         error: 'The login information is incorrect'
       })
     }
     const isPasswordValid = await user.comparePassword(password)
 
-    if(!isPasswordValid) {
+    if (!isPasswordValid) {
       return res.status(403).send({
         error: 'The login password is incorrect'
       })
@@ -60,7 +60,22 @@ async function login(req, res) {
   }
 }
 
-module.exports ={
+async function cssKeys (req, res) {
+  try {
+    const keys = {
+      N2YO: "LEX7UD-9NLV3L-UKJW6K-4SQS",
+      LOCATION: "ab1267dcadea58af9860a9c22e695220",
+      BINGMAP: "AkZONcylreEsXRF_uwe3ayuymkRS6MWStzxFyCmeNOYuFOQxM3GyWu9WdEjNzfHv"
+    }
+    res.status(200).send(keys)
+  } catch (error) {
+    res.status(400).send({
+      error: `Can not get keys`
+    })
+  }
+}
+module.exports = {
   register,
-  login
+  login,
+  cssKeys
 }

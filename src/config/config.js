@@ -26,7 +26,6 @@ module.exports = () => {
         port: 22,
         dstHost: 'localhost',
         dstPort: 3306,
-        privateKey: require('fs').readFileSync(`${process.env.SSH_PRIVATEKEY}`),
         keepAlive: true
       },
       authentication: {
@@ -54,7 +53,8 @@ module.exports = () => {
       },
       authentication: {
         jwtSecret: process.env.JWT_SECRET
-      }
+      },
+      baseUrl: '/api/v1'
     }
   }
 }
